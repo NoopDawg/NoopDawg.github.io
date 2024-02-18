@@ -1,4 +1,4 @@
-@import url("https://fonts.rcvd.io/iA%20Writer/stylesheet.css");
+/*@import url("https://fonts.rcvd.io/iA%20Writer/stylesheet.css");*/
 
 :root {
   /* Black and white */
@@ -103,53 +103,55 @@
 }
 
 body {
-    margin: 60px auto;
-    width: 70%;
-    background-color: rgb(18,18,18) !important;
-    font-family: 'iA Writer Quattro S';
-    color: var(--cl-gray-300);
-}
-nav ul, footer ul {
-    font-family:'Helvetica', 'Arial', 'Sans-Serif';
-    padding: 0px;
-    list-style: none;
-    font-weight: bold;
-}
-nav ul li, footer ul li {
-    display: inline;
-    margin-right: 20px;
-}
-a {
-    text-decoration: none;
-    color: #999;
-}
-a:hover {
-    text-decoration: underline;
-}
-h1 {
-    font-size: 3em;
-    color: rgb(200,200,200);
-    font-family:'Helvetica', 'Arial', 'Sans-Serif';
-}
-p {
-    font-size: 1.5em;
-    line-height: 1.4em;
-    color: #333;
-}
-footer {
-    border-top: 1px solid #d5d5d5;
-    font-size: .8em;
+    height: 100vh;
+    width: 100vw;
+    background-color: black;
+    margin: 0rem;
+    overflow: hidden;
+    /*font-family: 'iA Writer Quattro S';*/
 }
 
-ul.posts {
-    margin: 20px auto 40px;
-    font-size: 1.5em;
+#content-track {
+    display: flex;
+    gap: 4vmin;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(0, -50%);  /* Don't know why this is*/
+    /*justify-content: space-evenly;*/
+    /*flex-wrap: wrap;*/
+    /*align-items: center;*/
+    /*height: 100vh;*/
+
 }
 
-ul.posts li {
-    list-style: none;
+div.item-card {
+    height: 56vmin;
+    width: 40vmin;
+    border: 1px solid var(--cl-gray-800);
+    border-radius: 10px;
+    color: var(--cl-white);
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.blog-date {
-  color: white;
+div.item-card > .image {
+  height: 100%;
+  width: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.4;
+  position:absolute;
+}
+div.item-card > .image:hover {
+  opacity: 0.6;
+}
+
+div.card-label {
+  font-size: 2rem;
+  opacity: 1;
+  z-index: 1000;
 }
