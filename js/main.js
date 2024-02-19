@@ -1,6 +1,19 @@
 
-const track = document.getElementById("content-track")
+//Coming soon for cards
+const cards = document.getElementsByClassName("item-card")
+for (const card of cards) {
+    card.onmouseover = () => {
+        //get card-label div inside card
+        card.dataset.defaultText = card.getElementsByClassName("card-label")[0].innerText
+        card.getElementsByClassName("card-label")[0].innerText = "Coming Soon"
+    }
+    card.onmouseout = () => {
+        //get card-label div inside card
+        card.getElementsByClassName("card-label")[0].innerText = card.dataset.defaultText
+    }
+}
 
+const track = document.getElementById("content-track")
 window.onmousedown = e => {
     console.log(e.pageX)
     track.dataset.mouseDownAt = `${e.clientX}`;
@@ -30,6 +43,6 @@ window.onmousemove = e => {
         transform: `translate(${trackPercentage}%, -50%)`
     }, {duration: 1200, fill: "forwards"});
 
-    //update percentage to communicate to onmouseup (is there not a on mouse drag???)
+    //update percentage to communicate to onmouseup (is there not an on mouse drag???)
     track.dataset.percentage = `${trackPercentage}`;
 }
