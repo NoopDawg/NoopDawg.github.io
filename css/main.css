@@ -140,15 +140,23 @@ body::-webkit-scrollbar {
   transform: translate(0, -50%);
 }
 
-#about-me {
+/* #about-me {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
+  color: var(--cl-white);
+  display: none;
+} */
+
+.page-content {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   color: var(--cl-white);
   display: none;
 }
-
 
 div.item-card {
   height: 56vmin;
@@ -180,4 +188,8 @@ div.card-label {
   font-size: 2rem;
   opacity: 1;
   z-index: 1000;
+}
+
+* {
+  border: 1px solid var(--cl-white);
 }

@@ -1,5 +1,3 @@
-
-
 function isCardComingSoon(card) {
     label = card.getElementsByClassName("card-label")[0].innerText.toLowerCase().replace("\n", " ")
     return COMING_SOON_PAGES.includes(label)
@@ -64,16 +62,17 @@ track_page.onmousemove = e => {
     const movementPercentage = (mouseDelta / maxDelta) * -100;
 
     let trackPercentage = Math.max(Math.min(
-        parseFloat(track.dataset.prevPercentage) + movementPercentage,
-        0), -100)
+        parseFloat(track.dataset.prevPercentage || 0) + movementPercentage,
+        0), -100);
 
-    // track.style.transform = `translate(-${trackPercentage}%, -50%)`
-    track.animate({
-        transform: `translate(${trackPercentage}%, -50%)`
-    }, { duration: 1200, fill: "forwards" });
+    if (!isNaN(trackPercentage)) {
+        track.animate({
+            transform: `translate(${trackPercentage}%, -50%)`
+        }, { duration: 1200, fill: "forwards" });
 
-    //update percentage to communicate to onmouseup (is there not an on mouse drag???)
-    track.dataset.percentage = `${trackPercentage}`;
+        //update percentage to communicate to onmouseup
+        track.dataset.percentage = `${trackPercentage}`;
+    }
 }
 
 const cardObjects = document.querySelectorAll(".item-card");
@@ -97,6 +96,25 @@ cardObjects.forEach(card => {
         }
     }
 })
+
+document.addEventListener('DOMContentLoaded', function() {
+    const aboutMeSection = document.getElementById('about-me');
+    const earOfAnupSection = document.getElementById('ear-of-anup');
+    const myselfCard = document.querySelector('.item-card:nth-child(1)');
+    const musicCard = document.querySelector('.item-card:nth-child(3)');
+
+    myselfCard.addEventListener('click', function() {
+        aboutMeSection.style.display = 'flex';
+        earOfAnupSection.style.display = 'none';
+        // Ensure the drag functionality remains active
+        track.dataset.mouseDownAt = track.dataset.mouseDownAt || "0";
+    });
+
+    musicCard.addEventListener('click', function() {
+        aboutMeSection.style.display = 'none';
+        earOfAnupSection.style.display = 'flex';
+    });
+});
 
 // if (myselfCard && myselfCard.innerText === "Myself") {
 //     myselfCard.parentElement.onclick = () => {
