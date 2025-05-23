@@ -136,9 +136,17 @@ cardObjects.forEach(card => {
             if (card_data.label === 'myself') {
                 aboutMeSection.style.display = 'flex';
                 earOfAnupSection.style.display = 'none';
+                // Add a small delay to ensure the display change has taken effect
+                setTimeout(() => {
+                    aboutMeSection.scrollIntoView({ behavior: "smooth", block: "start" });
+                }, 100);
             } else if (card_data.label === 'music') {
                 aboutMeSection.style.display = 'none';
                 earOfAnupSection.style.display = 'flex';
+                // Add a small delay to ensure the display change has taken effect
+                setTimeout(() => {
+                    earOfAnupSection.scrollIntoView({ behavior: "smooth", block: "start" });
+                }, 100);
             }
             
             // Ensure the drag functionality remains active
