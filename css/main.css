@@ -121,7 +121,8 @@ body::-webkit-scrollbar {
 .page-container {
   display: flex;
   flex-direction: column;
-
+  align-items: center;
+  width: 100%;
 }
 
 #content-track-page {
@@ -129,6 +130,8 @@ body::-webkit-scrollbar {
   position: relative;
   align-items: center;
   user-select: none;
+  width: 172vmin; /* Width of 4 cards + gaps */
+  margin: 0 auto;
 }
 
 #content-track {
@@ -138,6 +141,7 @@ body::-webkit-scrollbar {
   left: 50%;
   top: 50%;
   transform: translate(0, -50%);
+  transition: transform 0.5s ease-out;
 }
 
 /* #about-me {
@@ -156,6 +160,10 @@ body::-webkit-scrollbar {
   justify-content: flex-start;
   color: var(--cl-white);
   display: none;
+  width: 172vmin;
+  margin: 0 auto;
+  padding: 2rem;
+  box-sizing: border-box;
 }
 
 div.item-card {
@@ -168,6 +176,7 @@ div.item-card {
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: all 0.3s ease;
 }
 
 div.item-card>.image {
@@ -188,6 +197,12 @@ div.card-label {
   font-size: 2rem;
   opacity: 1;
   z-index: 1000;
+}
+
+div.item-card.card-hover,
+div.item-card.card-active {
+  border-color: var(--cl-white);
+  transform: scale(1.05);
 }
 
 * {
