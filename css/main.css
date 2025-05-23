@@ -206,6 +206,6 @@ div.item-card.card-active>.image {
   opacity: 1;
 }
 
-* {
+/* * {
   border: 1px solid var(--cl-white);
-}
+} */
