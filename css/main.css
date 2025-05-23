@@ -144,15 +144,6 @@ body::-webkit-scrollbar {
   transition: transform 0.5s ease-out;
 }
 
-/* #about-me {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  color: var(--cl-white);
-  display: none;
-} */
-
 .page-content {
   height: 100vh;
   display: flex;
@@ -190,7 +181,7 @@ div.item-card>.image {
 }
 
 div.item-card>.image:hover {
-  opacity: 0.6;
+  opacity: 0.8;
 }
 
 div.card-label {
@@ -203,6 +194,11 @@ div.item-card.card-hover,
 div.item-card.card-active {
   border-color: var(--cl-white);
   transform: scale(1.05);
+  opacity: 0.8;
+}
+
+div.item-card.card-active>.image {
+  opacity: 1;
 }
 
 * {

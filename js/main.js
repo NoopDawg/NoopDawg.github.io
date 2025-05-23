@@ -27,6 +27,7 @@ track_page.onmousedown = e => {
 track_page.onmouseup = e => {
     track.dataset.mouseDownAt = "0";
     track.dataset.prevPercentage = track.dataset.percentage;
+    console.log("track.dataset.prevPercentage", track.dataset.prevPercentage)
 }
 
 track_page.onmousemove = e => {
@@ -37,12 +38,16 @@ track_page.onmousemove = e => {
 
     const movementPercentage = (mouseDelta / maxDelta) * -100;
 
-    let trackPercentage = Math.max(Math.min(
-        parseFloat(track.dataset.prevPercentage || 0) + movementPercentage,
-        0), -100);
+    // constrain track percentage to -100 to 0
+    let trackPercentage = Math.max(
+            Math.min(
+                parseFloat(track.dataset.prevPercentage) + movementPercentage, 0
+            ), -100
+        );
 
     if (!isNaN(trackPercentage)) {
-        console.log("track percentage", trackPercentage) 
+        console.log("trackPercentage", trackPercentage)
+        console.log("animating at line: 45")
         track.animate({
             transform: `translate(${trackPercentage}%, -50%)`
         }, { duration: 1200, fill: "forwards" });
@@ -94,7 +99,6 @@ cardObjects.forEach(card => {
 
         card.onmouseup = (e) => {
             if (isDragging) {
-                console.log("Card is being dragged")
                 track_page.dispatchEvent(new MouseEvent('mouseup', {
                     clientX: e.clientX,
                     bubbles: true
@@ -103,7 +107,6 @@ cardObjects.forEach(card => {
         };
         
         card.onclick = (e) => {
-            console.log("Card Clicked")
             // Only proceed if we're not dragging
             if (isDragging) {
                 return;
@@ -111,16 +114,20 @@ cardObjects.forEach(card => {
             
             // Remove active class from all cards
             cardObjects.forEach(c => c.classList.remove('card-active'));
+            cardObjects.forEach(c => c.classList.remove('card-hover'));
             // Add active class to clicked card
             card.classList.add('card-active');
             
             const percentage = -50
-            track.animate({
-                transform: `translate(${-50}%, -50%)`
+            console.log("animating at line 115")
+            const currentAnimation = track.animate({
+                transform: `translate(${percentage}%, -50%)`
             }, { duration: 500, fill: "forwards" });
-            
-            track.dataset.percentage = `${-percentage}`;
-            track.dataset.prevPercentage = `${-percentage}`;
+           
+            currentAnimation.onfinish = () => {
+                track.dataset.percentage = `${percentage}`;
+                track.dataset.prevPercentage = `${percentage}`;
+            }
 
             // Handle content display
             const aboutMeSection = document.getElementById('about-me');
