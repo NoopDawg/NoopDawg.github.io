@@ -1,11 +1,30 @@
 /*@import url("https://fonts.rcvd.io/iA%20Writer/stylesheet.css");*/
 
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hind+Madurai:wght@300;400;500;600;700&display=swap');
+
 :root {
   /* Black and white */
   --cl-white: #FFFFFF;
   --cl-black: #000000;
 
-  /* Gray */
+  /* CSS HEX */
+  --black: #000000ff;
+  --naples-yellow: #efcb68ff;
+  --yinmn-blue: rgb(10, 99, 193);
+  --claret: #832232ff;
+  --viridian: #1d7e5fff;
+ 
+  
+  --text-primary: var(--viridian);
+  --text-secondary: var(--yinmn-blue);
+  --text-tertiary: var(--claret);
+  --text-quaternary: var(--naples-yellow);
+  
+  
+    /* Gray */
   --cl-gray-50: #f4f5f5;
   --cl-gray-100: #e5e6e6;
   --cl-gray-200: #dcdcdc;
@@ -155,11 +174,18 @@ body::-webkit-scrollbar {
   justify-content: flex-start;
   color: var(--cl-white);
   display: none;
-  width: 172vmin;
+  width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
   box-sizing: border-box;
-  scroll-margin-top: 20vh; /* Add some margin when scrolling to this element */
+  scroll-margin-top: 10vh; /* Reduced from 20vh to 10vh */
+}
+
+/* Add new class for when content is shown */
+.page-content.active {
+  display: flex;
+  margin-top: -20vh; /* Pull content up closer to cards */
 }
 
 div.item-card {
@@ -209,3 +235,69 @@ div.item-card.card-active>.image {
 /* * {
   border: 1px solid var(--cl-white);
 } */
+
+span.text-primary {
+  color: var(--text-primary);
+}
+
+span.text-secondary {
+  color: var(--text-secondary);
+}
+
+
+/* Typography */
+h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 4rem;
+    color: var(--text-primary);
+    margin-top: 0.5rem;
+    margin-bottom: 0.0rem;
+    ;
+}
+
+h2 {
+    font-family: 'Lora', serif;
+    font-weight: 500;
+    font-style: italic;
+    font-size: 2rem;
+    color: var(--text-primary);
+    margin-bottom: 1.25rem;
+}
+
+p {
+    font-family: 'Hind Madurai', sans-serif;
+    font-weight: 400;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    max-width: 65ch;
+}
+
+button {
+  background-color: var(--text-primary);
+  border-color: var(--text-quaternary);
+  border-radius: 30px;
+  font-family: 'Hind Madurai', sans-serif;
+  font-weight: 400;
+  font-size: 1.1rem;
+  color: var(--cl-yellow-100);
+  padding: 0.5rem 2rem;
+  width: 200px;
+  min-width: 200px;
+  max-width: 200px;
+}
+
+button:hover {
+  background-color: var(--text-quaternary);
+  border-color: var(--text-primary);
+}
+
+.playlist-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center; 
+  justify-content: space-between;
+  gap: 1rem;
+}

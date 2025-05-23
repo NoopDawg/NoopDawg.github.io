@@ -135,14 +135,18 @@ cardObjects.forEach(card => {
             
             if (card_data.label === 'myself') {
                 aboutMeSection.style.display = 'flex';
+                aboutMeSection.classList.add('active');
                 earOfAnupSection.style.display = 'none';
+                earOfAnupSection.classList.remove('active');
                 // Add a small delay to ensure the display change has taken effect
                 setTimeout(() => {
                     aboutMeSection.scrollIntoView({ behavior: "smooth", block: "start" });
                 }, 100);
             } else if (card_data.label === 'music') {
                 aboutMeSection.style.display = 'none';
+                aboutMeSection.classList.remove('active');
                 earOfAnupSection.style.display = 'flex';
+                earOfAnupSection.classList.add('active');
                 // Add a small delay to ensure the display change has taken effect
                 setTimeout(() => {
                     earOfAnupSection.scrollIntoView({ behavior: "smooth", block: "start" });
