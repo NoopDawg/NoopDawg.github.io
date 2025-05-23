@@ -57,6 +57,53 @@ track_page.onmousemove = e => {
     }
 }
 
+function handleCardInteraction(card, card_data, isDragging) {
+    // Only proceed if we're not dragging
+    if (isDragging) {
+        return;
+    }
+    
+    // Remove active class from all cards
+    cardObjects.forEach(c => c.classList.remove('card-active'));
+    cardObjects.forEach(c => c.classList.remove('card-hover'));
+    // Add active class to clicked card
+    card.classList.add('card-active');
+    
+    const percentage = -50;
+    const currentAnimation = track.animate({
+        transform: `translate(${percentage}%, -50%)`
+    }, { duration: 500, fill: "forwards" });
+   
+    currentAnimation.onfinish = () => {
+        track.dataset.percentage = `${percentage}`;
+        track.dataset.prevPercentage = `${percentage}`;
+    }
+
+    // Handle content display
+    const aboutMeSection = document.getElementById('about-me');
+    const earOfAnupSection = document.getElementById('ear-of-anup');
+    
+    if (card_data.label === 'myself') {
+        aboutMeSection.style.display = 'flex';
+        aboutMeSection.classList.add('active');
+        earOfAnupSection.style.display = 'none';
+        earOfAnupSection.classList.remove('active');
+        setTimeout(() => {
+            aboutMeSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 100);
+    } else if (card_data.label === 'music') {
+        aboutMeSection.style.display = 'none';
+        aboutMeSection.classList.remove('active');
+        earOfAnupSection.style.display = 'flex';
+        earOfAnupSection.classList.add('active');
+        setTimeout(() => {
+            earOfAnupSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 100);
+    }
+    
+    track.dataset.mouseDownAt = track.dataset.mouseDownAt || "0";
+}
+
 const cardObjects = document.querySelectorAll(".item-card");
 
 cardObjects.forEach(card => {
@@ -90,9 +137,20 @@ cardObjects.forEach(card => {
             startX = e.clientX;
             isDragging = false;
         };
+
+        card.ontouchstart = (e) => {
+            startX = e.touches[0].clientX;
+            isDragging = false;
+        };
         
         card.onmousemove = (e) => {
             if (Math.abs(e.clientX - startX) > 30) {
+                isDragging = true;
+            }
+        };
+
+        card.ontouchmove = (e) => {
+            if (Math.abs(e.touches[0].clientX - startX) > 30) {
                 isDragging = true;
             }
         };
@@ -105,56 +163,22 @@ cardObjects.forEach(card => {
                 }));
             }
         };
+
+        card.ontouchend = (e) => {
+            if (isDragging) {
+                track_page.dispatchEvent(new MouseEvent('mouseup', {
+                    clientX: e.changedTouches[0].clientX,
+                    bubbles: true
+                }));
+            }
+        };
         
         card.onclick = (e) => {
-            // Only proceed if we're not dragging
-            if (isDragging) {
-                return;
-            }
-            
-            // Remove active class from all cards
-            cardObjects.forEach(c => c.classList.remove('card-active'));
-            cardObjects.forEach(c => c.classList.remove('card-hover'));
-            // Add active class to clicked card
-            card.classList.add('card-active');
-            
-            const percentage = -50
-            console.log("animating at line 115")
-            const currentAnimation = track.animate({
-                transform: `translate(${percentage}%, -50%)`
-            }, { duration: 500, fill: "forwards" });
-           
-            currentAnimation.onfinish = () => {
-                track.dataset.percentage = `${percentage}`;
-                track.dataset.prevPercentage = `${percentage}`;
-            }
+            handleCardInteraction(card, card_data, isDragging);
+        };
 
-            // Handle content display
-            const aboutMeSection = document.getElementById('about-me');
-            const earOfAnupSection = document.getElementById('ear-of-anup');
-            
-            if (card_data.label === 'myself') {
-                aboutMeSection.style.display = 'flex';
-                aboutMeSection.classList.add('active');
-                earOfAnupSection.style.display = 'none';
-                earOfAnupSection.classList.remove('active');
-                // Add a small delay to ensure the display change has taken effect
-                setTimeout(() => {
-                    aboutMeSection.scrollIntoView({ behavior: "smooth", block: "start" });
-                }, 100);
-            } else if (card_data.label === 'music') {
-                aboutMeSection.style.display = 'none';
-                aboutMeSection.classList.remove('active');
-                earOfAnupSection.style.display = 'flex';
-                earOfAnupSection.classList.add('active');
-                // Add a small delay to ensure the display change has taken effect
-                setTimeout(() => {
-                    earOfAnupSection.scrollIntoView({ behavior: "smooth", block: "start" });
-                }, 100);
-            }
-            
-            // Ensure the drag functionality remains active
-            track.dataset.mouseDownAt = track.dataset.mouseDownAt || "0";
+        card.ontouchend = (e) => {
+            handleCardInteraction(card, card_data, isDragging);
         };
     }
 });
