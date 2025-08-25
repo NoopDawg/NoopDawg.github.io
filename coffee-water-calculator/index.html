@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Water Calculator</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            max-width: 500px;
+            margin: 2em auto;
+            padding: 0 1em;
+        }
+        .form-group {
+            margin-bottom: 1em;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.25em;
+        }
+        input, select {
+            width: 100%;
+            padding: 0.5em;
+            box-sizing: border-box;
+        }
+        #results {
+            margin-top: 1.5em;
+            padding: 1em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Coffee Water Calculator</h1>
+
+    <div class="form-group">
+        <label for="total-weight">Weight of water in container (g)</label>
+        <input type="number" id="total-weight" placeholder="e.g. 1000">
+    </div>
+
+    <div class="form-group">
+        <label for="container-weight">Weight of container (g)</label>
+        <input type="number" id="container-weight" value="194">
+    </div>
+
+    <div class="form-group">
+        <label for="recipe">Water Recipe</label>
+        <select id="recipe">
+            <option value="budapest">Budapest</option>
+        </select>
+    </div>
+
+    <button onclick="calculate()">Calculate</button>
+
+    <div id="results" style="display: none;">
+        <h2>Results</h2>
+        <p><strong>Net Water Weight:</strong> <span id="net-water"></span> g</p>
+        <p><strong>Hardness Solution to add:</strong> <span id="hardness-solution"></span> g</p>
+        <p><strong>Buffer Solution to add:</strong> <span id="buffer-solution"></span> g</p>
+    </div>
+
+    <script>
+        const recipes = {
+            budapest: {
+                totalWater: 908.7,
+                hardness: 51.2,
+                buffer: 40.1
+            }
+        };
+
+        function calculate() {
+            const totalWeight = parseFloat(document.getElementById('total-weight').value);
+            const containerWeight = parseFloat(document.getElementById('container-weight').value);
+            const recipeName = document.getElementById('recipe').value;
+
+            if (isNaN(totalWeight)) {
+                alert("Please enter a valid weight for the water in the container.");
+                return;
+            }
+            
+            if (totalWeight <= containerWeight) {
+                alert("Total weight must be greater than container weight.");
+                return;
+            }
+
+            const netWater = totalWeight - containerWeight;
+            const recipe = recipes[recipeName];
+
+            const hardnessToAdd = (netWater / recipe.totalWater) * recipe.hardness;
+            const bufferToAdd = (netWater / recipe.totalWater) * recipe.buffer;
+
+            document.getElementById('net-water').textContent = netWater.toFixed(1);
+            document.getElementById('hardness-solution').textContent = hardnessToAdd.toFixed(1);
+            document.getElementById('buffer-solution').textContent = bufferToAdd.toFixed(1);
+
+            document.getElementById('results').style.display = 'block';
+        }
+    </script>
+
+</body>
+</html>
