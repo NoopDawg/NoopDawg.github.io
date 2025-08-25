@@ -278,7 +278,7 @@ p {
 button {
   background-color: var(--text-primary);
   border-color: var(--text-quaternary);
-  border-radius: 30px;
+  border-radius: 10px;
   font-family: 'Hind Madurai', sans-serif;
   font-weight: 400;
   font-size: 1.1rem;
@@ -295,9 +295,11 @@ button:hover {
 }
 
 .playlist-container {
+  min-height: 100px;
   display: flex;
   flex-direction: row;
-  align-items: center; 
+  align-items: center;
   justify-content: space-between;
   gap: 1rem;
+  /* outline: 1px solid #fff; */
 }

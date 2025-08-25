@@ -5,16 +5,10 @@ function isCardComingSoon(card) {
 
 CARDS = [
     { label: "myself", link: "about-me", isComplete: true },
-    { label: "software engineering", link: "software-engineering", isComplete: false },
+    { label: "software", link: "software-engineering", isComplete: true },
     { label: "music", link: "music", isComplete: true },
     { label: "writing", link: "writing", isComplete: false },
     { label: "projects", link: "projects", isComplete: false },
-]
-
-COMING_SOON_PAGES = [
-    "software engineering",
-    "music",
-    "writing",
 ]
 
 const track_page = document.getElementById("content-track-page")
@@ -72,7 +66,7 @@ function handleCardInteraction(card, card_data, isDragging) {
     const percentage = -50;
     const currentAnimation = track.animate({
         transform: `translate(${percentage}%, -50%)`
-    }, { duration: 500, fill: "forwards" });
+    }, { duration: 1200, fill: "forwards" });
    
     currentAnimation.onfinish = () => {
         track.dataset.percentage = `${percentage}`;
@@ -82,23 +76,44 @@ function handleCardInteraction(card, card_data, isDragging) {
     // Handle content display
     const aboutMeSection = document.getElementById('about-me');
     const earOfAnupSection = document.getElementById('ear-of-anup');
+    const softwareSection = document.getElementById('software-engineering');
     
+    console.log(card_data)
     if (card_data.label === 'myself') {
         aboutMeSection.style.display = 'flex';
-        aboutMeSection.classList.add('active');
         earOfAnupSection.style.display = 'none';
+        softwareSection.style.display = 'none';
+
+
+        aboutMeSection.classList.add('active');
         earOfAnupSection.classList.remove('active');
-        setTimeout(() => {
-            aboutMeSection.scrollIntoView({ behavior: "smooth", block: "start" });
-        }, 100);
+        softwareSection.classList.remove('active');
+        // setTimeout(() => {
+        //     aboutMeSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        // }, 200);
     } else if (card_data.label === 'music') {
         aboutMeSection.style.display = 'none';
-        aboutMeSection.classList.remove('active');
         earOfAnupSection.style.display = 'flex';
+        softwareSection.style.display = 'none';
+       
+        aboutMeSection.classList.remove('active');
         earOfAnupSection.classList.add('active');
-        setTimeout(() => {
-            earOfAnupSection.scrollIntoView({ behavior: "smooth", block: "start" });
-        }, 100);
+        softwareSection.classList.remove('active');
+        // setTimeout(() => {
+        //     earOfAnupSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        // }, 200);
+    } else if (card_data.label === 'software') {
+        console.log("software clicked")
+        aboutMeSection.style.display = 'none'
+        earOfAnupSection.style.display = 'none'
+        softwareSection.style.display = 'flex'
+
+        aboutMeSection.classList.remove('active');
+        earOfAnupSection.classList.remove('active');
+        softwareSection.classList.add('active');
+        // setTimeout(() => {
+        //     softwareSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        // }, 200);
     }
     
     track.dataset.mouseDownAt = track.dataset.mouseDownAt || "0";
