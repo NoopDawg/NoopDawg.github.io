@@ -3,62 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coffee Water Calculator</title>
+    <title>coffee-calc@anup:~$</title>
+    <link rel="icon" href="../emerald.png">
+    <link rel="stylesheet" href="../css/main.css">
     <style>
-        body {
-            font-family: sans-serif;
-            max-width: 500px;
-            margin: 2em auto;
-            padding: 0 1em;
-        }
-        .form-group {
-            margin-bottom: 1em;
-        }
-        label {
-            display: block;
-            margin-bottom: 0.25em;
-        }
-        input, select {
-            width: 100%;
-            padding: 0.5em;
-            box-sizing: border-box;
-        }
-        #results {
-            margin-top: 1.5em;
-            padding: 1em;
-            border: 1px solid #ccc;
+        .calculator-form {
+            background-color: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
             border-radius: 4px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            color: var(--text-accent);
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.5rem;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--text-accent);
+        }
+        
+        .calc-button {
+            background-color: var(--text-success);
+            color: var(--bg-primary);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 0.5rem;
+        }
+        
+        .calc-button:hover {
+            background-color: var(--text-accent);
+        }
+        
+        .results {
+            background-color: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 1rem;
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        .results h3 {
+            color: var(--text-accent);
+            margin-bottom: 0.5rem;
+        }
+        
+        .result-item {
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        
+        .result-value {
+            color: var(--text-success);
+            font-weight: 600;
         }
     </style>
 </head>
 <body>
+    <div class="terminal">
+        <div class="terminal-header">
+            <div class="terminal-buttons">
+                <span class="btn close"></span>
+                <span class="btn minimize"></span>
+                <span class="btn maximize"></span>
+            </div>
+            <div class="terminal-title">coffee-calc@anup:~$</div>
+        </div>
+        
+        <div class="terminal-body">
+            <div class="prompt">$ cat README.md</div>
+            <div class="output">
+                # Coffee Water Calculator
+                
+                A tool for calculating how much of each buffer solution to add to your water.
+                Based on the Barista Hustle water recipes.
+                
+                This helps achieve the perfect water chemistry for coffee brewing.
+            </div>
+            
+            <div class="prompt">$ ./coffee-calc.sh</div>
+            <div class="output">
+                <div class="calculator-form">
+                    <div class="form-group">
+                        <label for="total-weight">Weight of water in container (g)</label>
+                        <input type="number" id="total-weight" placeholder="e.g. 1000">
+                    </div>
 
-    <h1>Coffee Water Calculator</h1>
+                    <div class="form-group">
+                        <label for="container-weight">Weight of container (g)</label>
+                        <input type="number" id="container-weight" value="194">
+                    </div>
 
-    <div class="form-group">
-        <label for="total-weight">Weight of water in container (g)</label>
-        <input type="number" id="total-weight" placeholder="e.g. 1000">
-    </div>
+                    <div class="form-group">
+                        <label for="recipe">Water Recipe</label>
+                        <select id="recipe">
+                            <option value="budapest">Budapest</option>
+                        </select>
+                    </div>
 
-    <div class="form-group">
-        <label for="container-weight">Weight of container (g)</label>
-        <input type="number" id="container-weight" value="194">
-    </div>
+                    <button class="calc-button" onclick="calculate()">Calculate</button>
+                </div>
 
-    <div class="form-group">
-        <label for="recipe">Water Recipe</label>
-        <select id="recipe">
-            <option value="budapest">Budapest</option>
-        </select>
-    </div>
-
-    <button onclick="calculate()">Calculate</button>
-
-    <div id="results" style="display: none;">
-        <h2>Results</h2>
-        <p><strong>Net Water Weight:</strong> <span id="net-water"></span> g</p>
-        <p><strong>Hardness Solution to add:</strong> <span id="hardness-solution"></span> g</p>
-        <p><strong>Buffer Solution to add:</strong> <span id="buffer-solution"></span> g</p>
+                <div id="results" class="results">
+                    <h3>Results</h3>
+                    <div class="result-item">
+                        <strong>Net Water Weight:</strong> <span id="net-water" class="result-value"></span> g
+                    </div>
+                    <div class="result-item">
+                        <strong>Hardness Solution to add:</strong> <span id="hardness-solution" class="result-value"></span> g
+                    </div>
+                    <div class="result-item">
+                        <strong>Buffer Solution to add:</strong> <span id="buffer-solution" class="result-value"></span> g
+                    </div>
+                </div>
+            </div>
+            
+            <div class="prompt">$ <span class="cursor">█</span></div>
+        </div>
     </div>
 
     <script>
@@ -98,6 +183,5 @@
             document.getElementById('results').style.display = 'block';
         }
     </script>
-
 </body>
 </html>

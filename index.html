@@ -3,113 +3,85 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>A Space By Anup</title>
+    <title>anup@dev:~$</title>
     <link rel="icon" href="emerald.png">
-    <!-- <a href="https://www.flaticon.com/free-icons/emerald" title="emerald icons">Emerald icons created by Freepik - Flaticon</a>-->
     <link rel="stylesheet" href="css/main.css">
 </head>
 
 <body>
-
-    <!--<div class="blurb">-->
-    <!--    <h1>Wait don't look at me!</h1>-->
-    <!--    <p> I'm not done yet. This website is being made by Anup Jonchhe, a software engineer with a lot of interests.-->
-    <!--        Hopefully he'll learn more about website building while building me.</p>-->
-    <!--</div>-->
-    <div class="page-container">
-        <div id="content-track-page" class="section">
-            <div id="content-track" data-mouse-down-at="0" data-prev-percentage="0">
-                <div class="item-card" draggable="false" draggable="false">
-                    <img class="image" src="img/anup-sun-behind.jpg" draggable="false" />
-                    <div class="card-label"> Myself </div>
-                </div>
-                <div class="item-card" draggable="false">
-                    <img class="image" src="img/sinatra.jpg" draggable="false" />
-                    <div class="card-label"> Music </div>
-                </div>
-                <div class="item-card" draggable="false">
-                    <img class="image" src="img/boston-prudential.jpg" draggable="false" />
-                    <div class="card-label"> Software </div>
-                </div>
-                <div class="item-card" draggable="false">
-                    <img class="image" src="img/porto.jpg" draggable="false" />
-                    <div class="card-label"> Writing </div>
-                </div>
+    <div class="terminal">
+        <div class="terminal-header">
+            <div class="terminal-buttons">
+                <span class="btn close"></span>
+                <span class="btn minimize"></span>
+                <span class="btn maximize"></span>
             </div>
+            <div class="terminal-title">anup@dev:~$</div>
         </div>
-
-        <div id="about-me" class="section page-content">
-            <div class="header">
-                <h1>Hi, I'm Anup</h1>
+        
+        <div class="terminal-body">
+            <div class="prompt">$ whoami</div>
+            <div class="output">anup</div>
+            
+            <div class="prompt">$ cat about.txt</div>
+            <div class="output">
+                Hi, I'm Anup. I enjoy music, sports, engineering, technology... 
+                and I think my repertoire is continually expanding.
+                
+                This is a place for me to showcase and curate my favorite things. 
+                Built by me and for me. Welcome.
             </div>
-            <div class="content">
-                <p>
-                    I enjoy a lot of things. Music, sports, engineering, technology... and I think my repertoire is
-                    continually
-                    expanding.
-                </p>
-                <p>
-                    This is a place for me to showcase and curate my favorite things. Built by me and for me. Welcome.
-                </p>
-            </div>
-        </div>
-
-        <div id="ear-of-anup" class="section page-content" style="display: none;">
-            <div class="header">
-                <h1>Ear Of Anup</h1>
-            </div>
-            <h2>
-                Music Recommendations from a Friend
-            </h2>
-            <div class="content">
-                <p class="content"><span class="text-secondary">Welcome to Ear Of Anup.</span> This is where I share my
-                    music recommendations.</p>
-                <div class="playlist-container">
-                    <p class="content">
-                        Here's a link to what I'm listening to this month
-                    </p>
-                    <a href="https://open.spotify.com/playlist/45D87LTVPMX2rniUQZp4R8?si=dbb49d20db1e4428"
-                        target="_blank">
-                        <button id="btn" class="btn btn-primary">This Month</button>
-                    </a>
-                </div>
-                <div class="playlist-container">
-                    <p class="content">My first monthly playlist ever, I remember being in Nepal when I started this, on
-                        a $50 chromebook running some version of Linux off an SD card. Anyway, I was removed from the
-                        world and this is what I listened to.</p>
-                    <a href="https://open.spotify.com/playlist/5GraJcZLivi5vn78hmajQw?si=b6ae2a876d484ed5"
-                        target="_blank">
-                        <button id="btn" class="btn btn-primary">January 2018</button>
-                    </a>
+            
+            <div class="prompt">$ ls -la</div>
+            <div class="output">
+                <div class="file-list">
+                    <div class="file-item"><a href="#music">music/</a> - Music recommendations</div>
+                    <div class="file-item"><a href="#software">software/</a> - Tools and projects</div>
+                    <div class="file-item"><a href="#writing">writing/</a> - Blog posts</div>
+                    <div class="file-item"><a href="about/index.html">about/</a> - More about me</div>
                 </div>
             </div>
-        </div>
-
-        <div id="software-engineering" class="section page-content" style="display: none;">
-            <div class="header">
-                <h1>Software and Tools</h1>
-            </div>
-            <h2>
-                Tools I write for myself
-            </h2>
-            <div class="content">
-                <p class="content"><span class="text-secondary">Welcome to Ear Of Anup.</span> This is where I share my
-                    music recommendations.</p>
-                <div class="playlist-container">
-                    <p class="content">
-                        A tool for calculating how much of each buffer solution I should add to my jug of water. Based
-                        on this <a href="https://www.baristahustle.com/diy-water-recipes-the-world-in-two-bottles/?gad_source=1&gad_campaignid=22717698636&gbraid=0AAAAAC4Y3CYSyCbDCGXlSQ4oS-qpxtYnH&gclid=CjwKCAjwk7DFBhBAEiwAeYbJsX88zdpLE3eLq8LcAsaQAKCAvihSsHQinFToO7cpeJTnj0C49MpLrRoCgEwQAvD_BwE">Barista Hustle</a> article
-                    </p>
-                    <a href="coffee-water-calculator/index.html"
-                        target="_blank">
-                        <button id="btn" class="btn btn-primary">Coffee Water Calculator</button>
-                    </a>
+            
+            <div class="prompt">$ cat music/playlists.txt</div>
+            <div class="output">
+                <div class="section" id="music">
+                    <h3>Music Recommendations</h3>
+                    <p>Here's what I'm listening to:</p>
+                    <div class="link-container">
+                        <a href="https://open.spotify.com/playlist/45D87LTVPMX2rniUQZp4R8?si=dbb49d20db1e4428" target="_blank" class="link">This Month's Playlist</a>
+                    </div>
+                    <div class="link-container">
+                        <a href="https://open.spotify.com/playlist/5GraJcZLivi5vn78hmajQw?si=b6ae2a876d484ed5" target="_blank" class="link">January 2018 (First Playlist)</a>
+                    </div>
                 </div>
             </div>
+            
+            <div class="prompt">$ cat software/projects.txt</div>
+            <div class="output">
+                <div class="section" id="software">
+                    <h3>Software and Tools</h3>
+                    <p>Tools I write for myself:</p>
+                    <div class="link-container">
+                        <a href="coffee-water-calculator/index.html" class="link">Coffee Water Calculator</a>
+                        <span class="description">- A tool for calculating buffer solutions for coffee water</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="prompt">$ cat writing/posts.txt</div>
+            <div class="output">
+                <div class="section" id="writing">
+                    <h3>Writing</h3>
+                    <p>Blog posts and thoughts:</p>
+                    <div class="link-container">
+                        <a href="blog/index.html" class="link">View all posts</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="prompt">$ <span class="cursor">█</span></div>
         </div>
     </div>
-
-    <script src="js/main.js"></script>
 </body>
 
 </html>

@@ -1,199 +1,28 @@
-function isCardComingSoon(card) {
-    card_data = CARDS.find(c => c.label === card.innerText.toLowerCase().replace("\n", " "))
-    return !card_data.isComplete
-}
-
-CARDS = [
-    { label: "myself", link: "about-me", isComplete: true },
-    { label: "software", link: "software-engineering", isComplete: true },
-    { label: "music", link: "music", isComplete: true },
-    { label: "writing", link: "writing", isComplete: false },
-    { label: "projects", link: "projects", isComplete: false },
-]
-
-const track_page = document.getElementById("content-track-page")
-const track = document.getElementById("content-track")
-
-track_page.onmousedown = e => {
-    track.dataset.mouseDownAt = `${e.clientX}`;
-}
-
-track_page.onmouseup = e => {
-    track.dataset.mouseDownAt = "0";
-    track.dataset.prevPercentage = track.dataset.percentage;
-    console.log("track.dataset.prevPercentage", track.dataset.prevPercentage)
-}
-
-track_page.onmousemove = e => {
-    if (track.dataset.mouseDownAt === "0") return; //mouse is up
-
-    const mouseDelta = parseFloat(track.dataset.mouseDownAt) - e.clientX,
-        maxDelta = window.innerWidth / 2;
-
-    const movementPercentage = (mouseDelta / maxDelta) * -100;
-
-    // constrain track percentage to -100 to 0
-    let trackPercentage = Math.max(
-            Math.min(
-                parseFloat(track.dataset.prevPercentage) + movementPercentage, 0
-            ), -100
-        );
-
-    if (!isNaN(trackPercentage)) {
-        console.log("trackPercentage", trackPercentage)
-        console.log("animating at line: 45")
-        track.animate({
-            transform: `translate(${trackPercentage}%, -50%)`
-        }, { duration: 1200, fill: "forwards" });
-
-        //update percentage to communicate to onmouseup
-        track.dataset.percentage = `${trackPercentage}`;
-    }
-}
-
-function handleCardInteraction(card, card_data, isDragging) {
-    // Only proceed if we're not dragging
-    if (isDragging) {
-        return;
-    }
+// Simple terminal-style navigation
+document.addEventListener('DOMContentLoaded', function() {
+    // Add smooth scrolling for anchor links
+    const links = document.querySelectorAll('a[href^="#"]');
     
-    // Remove active class from all cards
-    cardObjects.forEach(c => c.classList.remove('card-active'));
-    cardObjects.forEach(c => c.classList.remove('card-hover'));
-    // Add active class to clicked card
-    card.classList.add('card-active');
-    
-    const percentage = -50;
-    const currentAnimation = track.animate({
-        transform: `translate(${percentage}%, -50%)`
-    }, { duration: 1200, fill: "forwards" });
-   
-    currentAnimation.onfinish = () => {
-        track.dataset.percentage = `${percentage}`;
-        track.dataset.prevPercentage = `${percentage}`;
-    }
-
-    // Handle content display
-    const aboutMeSection = document.getElementById('about-me');
-    const earOfAnupSection = document.getElementById('ear-of-anup');
-    const softwareSection = document.getElementById('software-engineering');
-    
-    console.log(card_data)
-    if (card_data.label === 'myself') {
-        aboutMeSection.style.display = 'flex';
-        earOfAnupSection.style.display = 'none';
-        softwareSection.style.display = 'none';
-
-
-        aboutMeSection.classList.add('active');
-        earOfAnupSection.classList.remove('active');
-        softwareSection.classList.remove('active');
-        // setTimeout(() => {
-        //     aboutMeSection.scrollIntoView({ behavior: "smooth", block: "start" });
-        // }, 200);
-    } else if (card_data.label === 'music') {
-        aboutMeSection.style.display = 'none';
-        earOfAnupSection.style.display = 'flex';
-        softwareSection.style.display = 'none';
-       
-        aboutMeSection.classList.remove('active');
-        earOfAnupSection.classList.add('active');
-        softwareSection.classList.remove('active');
-        // setTimeout(() => {
-        //     earOfAnupSection.scrollIntoView({ behavior: "smooth", block: "start" });
-        // }, 200);
-    } else if (card_data.label === 'software') {
-        console.log("software clicked")
-        aboutMeSection.style.display = 'none'
-        earOfAnupSection.style.display = 'none'
-        softwareSection.style.display = 'flex'
-
-        aboutMeSection.classList.remove('active');
-        earOfAnupSection.classList.remove('active');
-        softwareSection.classList.add('active');
-        // setTimeout(() => {
-        //     softwareSection.scrollIntoView({ behavior: "smooth", block: "start" });
-        // }, 200);
-    }
-    
-    track.dataset.mouseDownAt = track.dataset.mouseDownAt || "0";
-}
-
-const cardObjects = document.querySelectorAll(".item-card");
-
-cardObjects.forEach(card => {
-    const card_data = CARDS.find(c => c.label === card.innerText.toLowerCase().replace("\n", " "))
-    
-    // Set up hover effects
-    card.onmouseover = () => {
-        if (!card.classList.contains('card-active')) {
-            card.dataset.defaultText = card.getElementsByClassName("card-label")[0].innerText
-            if (!card_data.isComplete) {
-                card.getElementsByClassName("card-label")[0].innerText = "Coming Soon"
-            } else {
-                card.classList.add("card-hover");
+    links.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            const targetElement = document.getElementById(targetId);
+            
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
             }
-        }
-    }
+        });
+    });
     
-    card.onmouseout = () => {
-        if (!card.classList.contains('card-active')) {
-            card.getElementsByClassName("card-label")[0].innerText = card.dataset.defaultText
-            card.classList.remove("card-hover");
-        }
-    }
-
-    // Set up click and drag behavior
-    if (card_data.isComplete) {
-        let startX = 0;
-        let isDragging = false;
-        
-        card.onmousedown = (e) => {
-            startX = e.clientX;
-            isDragging = false;
-        };
-
-        card.ontouchstart = (e) => {
-            startX = e.touches[0].clientX;
-            isDragging = false;
-        };
-        
-        card.onmousemove = (e) => {
-            if (Math.abs(e.clientX - startX) > 30) {
-                isDragging = true;
-            }
-        };
-
-        card.ontouchmove = (e) => {
-            if (Math.abs(e.touches[0].clientX - startX) > 30) {
-                isDragging = true;
-            }
-        };
-
-        card.onmouseup = (e) => {
-            if (isDragging) {
-                track_page.dispatchEvent(new MouseEvent('mouseup', {
-                    clientX: e.clientX,
-                    bubbles: true
-                }));
-            }
-        };
-
-        card.ontouchend = (e) => {
-            if (isDragging) {
-                track_page.dispatchEvent(new MouseEvent('mouseup', {
-                    clientX: e.changedTouches[0].clientX,
-                    bubbles: true
-                }));
-            }
-        };
-        
-        card.onclick = (e) => {
-            handleCardInteraction(card, card_data, isDragging);
-        };
-
-        card.ontouchend = (e) => {
-            handleCardInteraction(card, card_data, isDragging);
-        };
+    // Add typing effect to cursor
+    const cursor = document.querySelector('.cursor');
+    if (cursor) {
+        setInterval(() => {
+            cursor.style.opacity = cursor.style.opacity === '0' ? '1' : '0';
+        }, 500);
     }
 });

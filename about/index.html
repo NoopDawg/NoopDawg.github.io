@@ -1,6 +1,56 @@
----
-layout: default
-title: The Standard About Page
----
+<!DOCTYPE html>
+<html lang="en">
 
-  <h1> Nothing really to see here </h1>
+<head>
+    <meta charset="UTF-8">
+    <title>about@anup:~$</title>
+    <link rel="icon" href="../emerald.png">
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+
+<body>
+    <div class="terminal">
+        <div class="terminal-header">
+            <div class="terminal-buttons">
+                <span class="btn close"></span>
+                <span class="btn minimize"></span>
+                <span class="btn maximize"></span>
+            </div>
+            <div class="terminal-title">about@anup:~$</div>
+        </div>
+        
+        <div class="terminal-body">
+            <div class="prompt">$ cat README.md</div>
+            <div class="output">
+                # About Anup
+                
+                Software engineer with a passion for music, technology, and continuous learning.
+                
+                ## Skills
+                - Full-stack development
+                - Music production and curation
+                - Coffee brewing and water chemistry
+                - Writing and documentation
+                
+                ## Interests
+                - Technology and engineering
+                - Music discovery and sharing
+                - Sports and physical activities
+                - Travel and cultural experiences
+            </div>
+            
+            <div class="prompt">$ ls -la projects/</div>
+            <div class="output">
+                <div class="file-list">
+                    <div class="file-item"><a href="../coffee-water-calculator/index.html">coffee-water-calculator/</a> - Coffee water chemistry tool</div>
+                    <div class="file-item"><a href="../blog/index.html">blog/</a> - Personal blog and thoughts</div>
+                    <div class="file-item"><a href="../index.html">portfolio/</a> - Main portfolio site</div>
+                </div>
+            </div>
+            
+            <div class="prompt">$ <span class="cursor">█</span></div>
+        </div>
+    </div>
+</body>
+
+</html>

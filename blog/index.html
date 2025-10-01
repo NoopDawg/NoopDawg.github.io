@@ -1,11 +1,51 @@
----
-layout: default
-title: Anup Jonchhe's weblog
----
-	<h1>{{ page.title }}</h1>
-	<ul class="posts">
+<!DOCTYPE html>
+<html lang="en">
 
-	  {% for post in site.posts %}
-	    <li><span class="blog-date">{{ post.date | date_to_string }}</span> | <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></li>
-	  {% endfor %}
-	</ul>
+<head>
+    <meta charset="UTF-8">
+    <title>blog@anup:~$</title>
+    <link rel="icon" href="../emerald.png">
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+
+<body>
+    <div class="terminal">
+        <div class="terminal-header">
+            <div class="terminal-buttons">
+                <span class="btn close"></span>
+                <span class="btn minimize"></span>
+                <span class="btn maximize"></span>
+            </div>
+            <div class="terminal-title">blog@anup:~$</div>
+        </div>
+        
+        <div class="terminal-body">
+            <div class="prompt">$ ls -la posts/</div>
+            <div class="output">
+                <div class="file-list">
+                    <div class="file-item">Coming soon...</div>
+                </div>
+            </div>
+            
+            <div class="prompt">$ cat README.md</div>
+            <div class="output">
+                # Blog
+                
+                This is where I'll share my thoughts, experiences, and learnings.
+                Posts will cover topics like:
+                
+                - Software development
+                - Music and creativity
+                - Technology insights
+                - Personal projects
+                - Life experiences
+                
+                Stay tuned for content!
+            </div>
+            
+            <div class="prompt">$ <span class="cursor">█</span></div>
+        </div>
+    </div>
+</body>
+
+</html>
