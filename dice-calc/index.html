@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dice Sum Probability</title>
+    <link rel="icon" href="../emerald.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../css/main.css">
+    <style>
+        body {
+            padding: 2rem;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        label {
+            display: block;
+            margin-top: 1.5rem;
+            font-family: 'Hind Madurai', sans-serif;
+            font-weight: 500;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+        }
+
+        input {
+            width: 100%;
+            max-width: 100%;
+            padding: .75rem;
+            margin-top: .5rem;
+            background-color: var(--cl-gray-900);
+            border: 1px solid var(--text-primary);
+            border-radius: 8px;
+            color: var(--cl-white);
+            font-family: 'Hind Madurai', sans-serif;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        input::placeholder {
+            color: var(--cl-gray-500);
+        }
+
+        button {
+            margin-top: 1.5rem;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .out {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--cl-gray-900);
+            border: 1px solid var(--text-secondary);
+            border-radius: 10px;
+            font-family: 'Hind Madurai', sans-serif;
+        }
+
+        .out strong {
+            color: var(--text-secondary);
+        }
+
+        .out div {
+            margin-bottom: 0.75rem;
+            color: var(--cl-white);
+        }
+
+        .out div:last-child {
+            margin-bottom: 0;
+        }
+
+        small {
+            color: var(--cl-gray-400);
+        }
+
+        .error {
+            color: var(--cl-red-400);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Dice Sum &gt; Threshold Probability</h1>
+        <h2>Calculate probability of exceeding a threshold</h2>
+
+        <label for="sides">Dice sides (comma-separated)</label>
+        <input id="sides" type="text" value="4,6,12" placeholder="e.g., 6,6 or 4,6,12" />
+
+        <label for="threshold">Success threshold (sum &gt; threshold)</label>
+        <input id="threshold" type="number" value="12" />
+
+        <button class="calc-button" id="go">Compute</button>
+
+        <div class="out" id="out"></div>
+    </div>
+
+    <script>
+        const gcd = (a, b) => b ? gcd(b, a % b) : Math.abs(a);
+        function parseSides(text) {
+            const arr = text.split(",").map(s => Number(s.trim())).filter(n => Number.isFinite(n));
+            if (arr.length === 0 || arr.some(n => n < 1 || !Number.isInteger(n))) throw new Error("Enter integers ≥ 1, comma-separated.");
+            return arr;
+        }
+        function countWaysOverThreshold(sides, threshold) {
+            // dp[sum] = ways to achieve this sum (use integer counts; probability later)
+            let dp = new Map([[0, 1]]);
+            for (const s of sides) {
+                const next = new Map();
+                for (const [sum, ways] of dp) {
+                    for (let face = 1; face <= s; face++) {
+                        const ns = sum + face;
+                        next.set(ns, (next.get(ns) || 0) + ways);
+                    }
+                }
+                dp = next;
+            }
+            let favorable = 0, total = sides.reduce((a, b) => a * b, 1);
+            for (const [sum, ways] of dp) {
+                if (sum > threshold) favorable += ways;
+            }
+            return { favorable, total };
+        }
+        function fmtProb(fav, tot) {
+            const r = fav / tot;
+            const g = gcd(fav, tot);
+            return {
+                p: r,
+                pct: (r * 100).toFixed(4) + "%",
+                frac: `${fav / g}/${tot / g}`
+            };
+        }
+        function compute() {
+            const out = document.getElementById("out");
+            try {
+                const sides = parseSides(document.getElementById("sides").value);
+                const t = Number(document.getElementById("threshold").value);
+                if (!Number.isFinite(t)) throw new Error("Threshold must be a number.");
+                const { favorable, total } = countWaysOverThreshold(sides, t);
+                const { p, pct, frac } = fmtProb(favorable, total);
+                out.innerHTML = `
+          <div><strong>P(sum &gt; ${t})</strong> = ${p.toFixed(6)} (${pct})</div>
+          <div><strong>Fraction:</strong> ${frac}</div>
+          <div><small>Favorable / Total outcomes: ${favorable} / ${total}</small></div>
+        `;
+            } catch (err) {
+                out.innerHTML = `<div class="error">Error: ${err.message}</div>`;
+            }
+        }
+        document.getElementById("go").addEventListener("click", compute);
+        // auto-run on load with defaults
+        compute();
+    </script>
+</body>
+
+</html>

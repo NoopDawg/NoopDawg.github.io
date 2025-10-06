@@ -113,6 +113,18 @@ body {
   text-decoration: underline;
 }
 
+.calc-button {
+    background-color: var(--text-success);
+    color: var(--bg-primary);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 0.5rem;
+}
+
 .description {
   color: var(--text-secondary);
   font-style: italic;
